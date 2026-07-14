@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+streamlit
+pandas
+numpy
+scipy
+scikit-learn
+psycopg2-binary
+sqlalchemy
+python-dotenv
+requests
+matplotlib
+langchain
+langgraph
