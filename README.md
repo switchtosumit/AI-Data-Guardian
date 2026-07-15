@@ -25,7 +25,7 @@ AI Data Guardian is a production-inspired AI-powered data observability platform
 
 ## 🏗 Architecture
 
-![Architecture](docs/architecture.png)
+![Architecture](docs/System_Architecture_Diagram.png)
 
 ---
 
