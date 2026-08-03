@@ -1,11 +1,13 @@
 import pandas as pd
 import json 
 import os
+from utils.logger import drift_logger
 
 def profile_dataset(path):
 
     # load dataset
     df = pd.read_csv(path)
+    drift_logger.info(f"Dataset loaded: {path}")
 
     profile = {}
 
@@ -27,7 +29,7 @@ def profile_dataset(path):
             profile[col]["std"] = float(df[col].std())
             profile[col]["min"] = float(df[col].min())
             profile[col]["max"] = float(df[col].max())
-
+    drift_logger.info(f"Profile generated for {len(profile)} columns")
     return profile
 
 def save_profile(profile, filename = "monitoring/profile_history.json"):

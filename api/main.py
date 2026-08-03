@@ -1,3 +1,5 @@
+from unittest import result
+
 from fastapi import FastAPI
 from agents.root_cause_agent import analyze_root_cause
 from agents.fix_agent import generate_fix
@@ -7,6 +9,7 @@ from agents.severity_agent import classify_severity
 from db.incidents import save_incident
 from db.database import get_connection
 from utils.logger import api_logger
+from graph.workflow import guardian_graph
 
 app = FastAPI()
 
@@ -19,8 +22,10 @@ def analyze():
 
     api_logger.info("Analysis request received")
 
-    try:
+    api_logger.info("Starting LangGraph workflow")
 
+    try:
+        """
         profile = profile_dataset("data/gold.csv")
 
         api_logger.info("Dataset profiling completed")
@@ -68,6 +73,24 @@ def analyze():
            "alerts": alerts,
            "root_cause": root_cause,
            "fix": fix
+        }
+        """
+        # using workflow graph
+
+        result = guardian_graph.invoke({"dataset_path": "data/gold.csv"})
+
+        api_logger.info("LangGraph workflow completed")
+
+        api_logger.info(f"Returning response | Drift={result['drift_detected']} | Severity={result.get('severity')}")                        
+
+        return {
+                "success": True,
+                "drift_detected": result["drift_detected"],
+                "alerts": result.get("alerts", []),
+                "severity": result.get("severity"),
+                "root_cause": result.get("root_cause"),
+                "fix": result.get("fix"),
+                "message": "Analysis completed successfully, No drift detected" if not result["drift_detected"] else "Analysis completed successfully, drift detected"
         }
 
     except Exception as e:

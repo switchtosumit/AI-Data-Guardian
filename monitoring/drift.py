@@ -3,8 +3,8 @@ import os
 import numpy as np
 from utils.logger import drift_logger
 
-def detect_drift(current_profile, threshold = 2.0):
-    path = "monitoring/profile_history.json"
+def detect_drift(current_profile, threshold = 2.0, profile_path = "monitoring/profile_history.json"):
+    path = profile_path
 
     if not os.path.exists(path):
         with open(path, "w") as f:
@@ -16,13 +16,14 @@ def detect_drift(current_profile, threshold = 2.0):
     
     if len(history) < 1:
         return False, ["No baseline profile available"]
-        
+
+    drift_logger.info("Loading baseline profile")  
     baseline = history[-1]
     
     alerts = []
     
 
-   
+    drift_logger.info("Comparing current profile against baseline")
     #Volumne Detection
     baseline_row_count = baseline['metadata']['row_count']
     current_row_count = current_profile['metadata']['row_count']

@@ -33,6 +33,5 @@ def save_incident(
     )
 
     conn.commit()
-
     cur.close()
     conn.close()

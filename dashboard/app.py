@@ -37,9 +37,10 @@ if st.button("Run Analysis"):
     with st.spinner("Running monitoring and AI analysis..."):
 
         data = call_api_with_retry()
+        
 
-    if not data.get("success", False):
-        st.error(data.get("error", "Unknown error"))
+    if data.get("error"):
+        st.error(data["error"])
         st.stop()
 
     if not data.get("drift_detected", False):
@@ -51,13 +52,14 @@ if st.button("Run Analysis"):
         st.error("Drift Detected")
 
         st.write("### Alerts")
-        st.write(data["alerts"])
+        for alert in data.get("alerts", []):
+            st.warning(alert)
 
-        st.write("### Root Cause")
-        st.write(data["root_cause"])
+        st.markdown("## Root Cause Analysis")
+        st.markdown(data.get("root_cause", "N/A"))
 
-        st.write("### Generated SQL Fix")
-        st.code(data["fix"], language="sql")
+        st.markdown("## Recommended SQL Fix")
+        st.code(data.get("fix", ""), language="sql")
 
 if st.button("View Incident History"):
 

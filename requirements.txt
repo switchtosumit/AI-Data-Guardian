@@ -12,3 +12,4 @@ requests
 matplotlib
 langchain
 langgraph
+pytest

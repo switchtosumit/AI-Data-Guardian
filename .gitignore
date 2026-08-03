@@ -5,3 +5,5 @@ logs/
 monitoring/profile_history.json
 .venv/
 .vscode/
+.pytest_cache/
+
