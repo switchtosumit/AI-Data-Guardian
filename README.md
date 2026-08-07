@@ -3,7 +3,11 @@
 AI Data Guardian is a production-inspired AI-powered data observability platform that automatically detects data quality issues, performs AI-driven root cause analysis, recommends fixes, and manages incidents.
 
 ---
+## Latest Features Added
 
+- LangGraph Multi-Agent Orchestration
+- Unit Testing
+  
 ## 🚀 Features
 
 - Data Profiling
@@ -118,8 +122,7 @@ http://localhost:8000/docs
 
 ## Upcoming Features
 
-- LangGraph Multi-Agent Orchestration
-- Unit Testing
+
 - GitHub Actions CI/CD
 - Email/Slack Notifications
 - Authentication
